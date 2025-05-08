@@ -19,20 +19,7 @@ export const Login = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [error1, setError1] = useState("");
-  useEffect(() => {
-    if (input.length < 5) {
-      setError("Password 5 ih usegtei bn");
-    } else if (input === password) {
-      setError("The password is already taken");
-    } else setError("");
-  }, [input]);
-  useEffect(() => {
-    if (email.length < 8) {
-      setError1("Email 5 ih usegtei bn");
-    } else if (email === userEmail) {
-      setError1("The email is already taken");
-    } else setError1("");
-  }, [email]);
+
   return (
     <Card className="w-[407px] border-0 shadow-none">
       <CardHeader>
