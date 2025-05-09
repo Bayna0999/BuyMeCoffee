@@ -9,7 +9,7 @@ export default function layout({
   return (
     <div className="flex w-screen h-screen bg-white relative">
       <Frame />
-      <div>{children}</div>
+      <div className="w-[50%]">{children}</div>
     </div>
   );
 }
