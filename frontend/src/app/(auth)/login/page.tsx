@@ -1,4 +1,4 @@
-import Frame from "@/components/loginCom/Frame";
+import Frame from "@/components/component/Frame";
 import React from "react";
 
 const page = () => {
