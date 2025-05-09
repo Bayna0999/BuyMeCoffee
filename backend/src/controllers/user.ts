@@ -67,7 +67,7 @@ export const updateUserById = async (req: Request, res: Response) => {
 export const deleteUserById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
-    const response = await prisma.user.delete({
+    await prisma.user.delete({
       where: {
         id: Number(id),
       },
