@@ -23,7 +23,7 @@ const Frame = () => {
           <p className="text-[24px] font-extrabold">Fund your creative work</p>
           <p className="text-[16px] w-[455px]">
             Accept support. Start a membership. Setup a shop. It’s easier than
-            you think.
+            you think
           </p>
         </div>
       </div>
