@@ -1,4 +1,4 @@
-import Frame from "@/components/loginCom/Frame";
+import Frame from "@/components/component/Frame";
 import React from "react";
 
 export default function layout({
@@ -9,7 +9,7 @@ export default function layout({
   return (
     <div className="flex w-screen h-screen bg-white relative">
       <Frame />
-      <div>{children}</div>
+      <div className="w-[50%]">{children}</div>
     </div>
   );
 }
