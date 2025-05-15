@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -14,7 +14,7 @@ import { FormInput } from "../SignUp/FormInput";
 
 const userEmail = "test@gmail.com";
 const password = "hello";
-export const Login = () => {
+export const Login = ({ username }: { username: string }) => {
   const [input, setInput] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
@@ -23,7 +23,7 @@ export const Login = () => {
   return (
     <Card className="w-[407px] border-0 shadow-none">
       <CardHeader>
-        <CardTitle className="text-2xl">Welcome, baconpancakes1</CardTitle>
+        <CardTitle className="text-2xl">Welcome,{username}</CardTitle>
         <CardDescription>Connect email and set a password</CardDescription>
       </CardHeader>
       <CardContent>
