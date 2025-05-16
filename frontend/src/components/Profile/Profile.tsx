@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Camera } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -17,7 +16,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { HTMLProps, useState } from "react";
+import { Textarea } from "../ui/textarea";
+import { Camera } from "lucide-react";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -29,7 +30,7 @@ const formSchema = z.object({
 
   photo: z.string({ required_error: "Must upload image" }),
 
-  social: z.string().min(0, {
+  social: z.string().url({
     message: "Please enter a social link",
   }),
 });
@@ -61,9 +62,9 @@ export function Profile() {
             <FormItem>
               <FormLabel>Add photo</FormLabel>
               <FormControl>
-                <div className=" size-[160px] border-[1px] border-dashed rounded-full flex justify-center items-center relative">
+                <div className="  size-[160px] border-[1px] border-dashed flex justify-center items-center relative rounded-full ">
                   <input
-                    className="size-[160px] rounded-full flex justify-center items-center opacity-0 absolute z-1"
+                    className="size-[160px]  flex justify-center border-none items-center opacity-0 absolute z-1 rounded-full"
                     type="file"
                     id="files"
                     {...field}
@@ -72,11 +73,13 @@ export function Profile() {
                       handlePreview(event);
                     }}
                   />
-                  <img
-                    className="size-[160px] rounded-full absolute
-                  "
-                    src={imageUrl as string}
-                  />
+                  {imageUrl && (
+                    <img
+                      className="size-[158px] rounded-full"
+                      src={imageUrl as string}
+                    />
+                  )}
+                  <Camera className="flex absolute z-[-1]" />
                 </div>
               </FormControl>
 
@@ -92,26 +95,8 @@ export function Profile() {
               <FormLabel>Name</FormLabel>
               <FormControl>
                 <Input
-                  className="w-[510px] h-[40px]"
+                  className=" "
                   placeholder="Enter your name here"
-                  {...field}
-                />
-              </FormControl>
-
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="social"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Social media URL</FormLabel>
-              <FormControl>
-                <Input
-                  className="w-[510px] h-[131px] "
-                  placeholder="Write about yourself here"
                   {...field}
                 />
               </FormControl>
@@ -126,6 +111,24 @@ export function Profile() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>About</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Write about yourself here"
+                  className="resize-none h-[131px]"
+                  {...field}
+                />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="social"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Social media URL</FormLabel>
               <FormControl>
                 <Input
                   className="w-[510px] h-[40px]"
