@@ -9,12 +9,13 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FormInput } from "./FormInput";
-const username = "bayna";
-const password = "hello";
+
 export const SignUp = ({
   pageStep,
+  Username,
 }: {
   pageStep: Dispatch<SetStateAction<number>>;
+  Username: Dispatch<SetStateAction<string>>;
 }) => {
   const [step1, setStep1] = useState(0);
   const [input, setInput] = useState("");
@@ -23,13 +24,7 @@ export const SignUp = ({
   const handleOnClick = (setStep: any) => {
     setStep(step1 + 1);
   };
-  const HandleError = () => {
-    if (input.length < 5) {
-      setError("Username 5 ih usegtei bn");
-    } else if (input === username) {
-      setError("The username is already taken");
-    } else setError("");
-  };
+
   return (
     <Card className="w-[407px] border-0 shadow-none">
       <CardHeader>
@@ -58,6 +53,7 @@ export const SignUp = ({
         <Button
           onClick={() => {
             handleOnClick(pageStep);
+            Username(input);
           }}
           className="w-full"
         >
