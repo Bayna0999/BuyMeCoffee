@@ -62,36 +62,3 @@ export const Login = ({ username }: { username: string }) => {
     </Card>
   );
 };
-// <Card className="flex flex-col gap-6 w-[360px] h-fit border-0 shadow-none">
-//   <CardHeader>
-//     <p className="text-[24px] text-black font-extrabold">
-//       Create Your Account
-//     </p>
-//     <p className="text-[14px] text-[#71717A]">
-//       Choose a username for your page
-//     </p>
-//   </CardHeader>
-//   <CardContent className="flex flex-col gap-[20px] w-[360px] h-[40px]">
-//     <p className="text-[14px] text-black font-bold w-[360px] h-[40px]">
-//       Username
-//     </p>
-//     <input
-//       type="text"
-//       placeholder="Enter username here"
-//       className="w-[360px] h-[40px]  border-[2px] px-[10px] py-[10px] rounded-sm border-[#71717A]"
-//     />
-//     <p className="text-[14px] text-black font-bold w-[360px] h-[40px]">
-//       Username
-//     </p>
-//     <input
-//       type="text"
-//       placeholder="Enter username here"
-//       className="w-[360px] h-[40px]  border-[2px] px-[10px] py-[10px] rounded-sm border-[#71717A]"
-//     />
-//   </CardContent>
-//   <CardFooter>
-//     <button className="w-[360px] h-[40px] py-[10px] bg-[#E4E4E7] rounded-sm flex justify-center items-center font-bold text-white ">
-//       Continue
-//     </button>
-//   </CardFooter>
-// </Card>

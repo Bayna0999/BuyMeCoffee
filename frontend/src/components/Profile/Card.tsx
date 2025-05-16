@@ -15,7 +15,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useEffect, useState } from "react";
+import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
+
+import axios from "axios";
 import {
   Select,
   SelectContent,
@@ -24,8 +26,29 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@radix-ui/react-select";
-import axios from "axios";
+} from "../ui/select";
+
+type CountryType = {
+  name: {
+    common: string;
+  };
+};
+
+const Months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
 const formSchema = z.object({
   country: z.string({
     message: "Select country to continue",
@@ -56,16 +79,11 @@ export function Card() {
       country: "",
     },
   });
-  const [url, setUrl] = useState(null);
-  const handlePreview = (files) => {
-    console.log(files);
-    setUrl(files.target.files[0]);
-  };
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    console.log(url, "this");
   }
-  const [data, setData] = useState();
+  const [data, setData] = useState<CountryType[]>([]);
 
   const fetchData = async () => {
     const res = await axios.get(
@@ -77,7 +95,20 @@ export function Card() {
     fetchData();
   }, []);
   console.log(data, "dataa");
-
+  var checkLuhn = function (cardNo) {
+    var s = 0;
+    var doubleDigit = false;
+    for (var i = cardNo.length - 1; i >= 0; i--) {
+      var digit = +cardNo[i];
+      if (doubleDigit) {
+        digit *= 2;
+        if (digit > 9) digit -= 9;
+      }
+      s += digit;
+      doubleDigit = !doubleDigit;
+    }
+    return s % 10 == 0;
+  };
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -89,16 +120,16 @@ export function Card() {
               <FormLabel>Username</FormLabel>
               <FormControl>
                 <Select>
-                  <SelectTrigger className="w-[180px]">
+                  <SelectTrigger className="w-[510px] h-[40px]">
                     <SelectValue placeholder="Select a fruit" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Country</SelectLabel>
-                      {data?.map((val: string, index: number) => {
+                      {data?.map((val, index: number) => {
                         return (
                           <SelectItem key={index} value={val.name.common}>
-                            {val}
+                            {val.name.common}
                           </SelectItem>
                         );
                       })}
@@ -166,14 +197,53 @@ export function Card() {
             name="cardnumber"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Enter card number</FormLabel>
+                <FormLabel>Month</FormLabel>
                 <FormControl>
-                  <Input
-                    type="date"
-                    placeholder="XXXX-XXXX-XXXX-XXXX"
-                    {...field}
-                    className="w-[160px] h-[36px]"
-                  />
+                  <Select>
+                    <SelectTrigger className="w-[160px] h-[40px]">
+                      <SelectValue placeholder="Select a fruit" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Country</SelectLabel>
+                        {Months.map((val: string, index: number) => {
+                          return (
+                            <SelectItem key={index} value={val}>
+                              {val}
+                            </SelectItem>
+                          );
+                        })}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="cardnumber"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Year</FormLabel>
+                <FormControl>
+                  <Select>
+                    <SelectTrigger className="w-[160px] h-[40px]">
+                      <SelectValue placeholder="Select a fruit" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Country</SelectLabel>
+                        <SelectItem value={"2001"}>2020</SelectItem>
+                        <SelectItem value={"2002"}>2021</SelectItem>
+                        <SelectItem value={"2003"}>2022</SelectItem>
+                        <SelectItem value={"2004"}>2023</SelectItem>
+                        <SelectItem value={"2005"}>2024</SelectItem>
+                        <SelectItem value={"2006"}>2025</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -186,30 +256,23 @@ export function Card() {
               <FormItem>
                 <FormLabel>Enter card number</FormLabel>
                 <FormControl>
-                  <Input
-                    type="date"
-                    placeholder="XXXX-XXXX-XXXX-XXXX"
-                    {...field}
-                    className="w-[160px] h-[36px]"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="cardnumber"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Enter card number</FormLabel>
-                <FormControl>
-                  <Input
-                    type="date"
-                    placeholder="XXXX-XXXX-XXXX-XXXX"
-                    {...field}
-                    className="w-[160px] h-[36px]"
-                  />
+                  <Select>
+                    <SelectTrigger className="w-[160px] h-[40px]">
+                      <SelectValue placeholder="Select a fruit" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>CVC</SelectLabel>
+                        {data?.map((val, index: number) => {
+                          return (
+                            <SelectItem key={index} value={val.name.common}>
+                              {val.name.common}
+                            </SelectItem>
+                          );
+                        })}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                 </FormControl>
                 <FormMessage />
               </FormItem>

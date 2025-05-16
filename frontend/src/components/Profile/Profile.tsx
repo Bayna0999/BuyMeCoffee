@@ -1,5 +1,5 @@
 "use client";
-import ReactFileReader from "react-file-reader";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -42,9 +42,8 @@ export function Profile() {
     },
   });
   const [url, setUrl] = useState(null);
-  const handlePreview = (files) => {
-    console.log(files);
-    setUrl(files.target.files[0]);
+  const handlePreview = (event) => {
+    setUrl(event.target.files[0]);
   };
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
