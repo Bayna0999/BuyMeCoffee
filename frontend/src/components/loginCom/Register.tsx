@@ -1,5 +1,10 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import {
   Card,
   CardContent,
@@ -9,7 +14,9 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import { FormInput } from '../SignUp/FormInput';
 import {
   Form,
   FormControl,
@@ -18,14 +25,17 @@ import {
   FormLabel,
   FormMessage,
 } from '../ui/form';
-import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { userProps } from '@/lib/utils';
-import { useParams, useRouter } from 'next/navigation';
 
-export const Login = () => {
+const userEmail = 'test@gmail.com';
+const password = 'hello';
+export const Register = ({ username }: { username: string }) => {
+  const [input, setInput] = useState('');
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const [error1, setError1] = useState('');
+
   const formSchema = z.object({
     email: z.string().email({
       message: 'Please enter a valid email ',
@@ -42,53 +52,34 @@ export const Login = () => {
       password: '',
     },
   });
-  const [userData, setUserData] = useState([]);
-  const fetchUser = async () => {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/user`
-    );
-    setUserData(res.data.message);
+  const createUser = async (user: userProps) => {
+    try {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/user`,
+        {
+          email: user.email,
+          password: password,
+          name: username,
+        }
+      );
+      return res.data;
+    } catch (error) {
+      console.error('Error creating user:', error);
+    }
   };
-  useEffect(() => {
-    fetchUser();
-  }, []);
-  const router = useRouter();
-  const [result, setResult] = useState(0);
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    const user = {
+    const value = {
       email: values.email,
       password: values.password,
     };
-    authUser(user);
-    if (result == 1) {
-      console.log('success');
-      router.push('/');
-    } else {
-      console.log('fail');
-      console.log(result);
-    }
+    createUser(value);
   }
-  const authUser = (user: userProps) => {
-    userData.map((value: userProps) => {
-      if (value.email == user.email && value.password == user.password) {
-        console.log(
-          value.email,
-          ' 1 ',
-          user.email,
-          ' 2 ',
-          value.password,
-          ' 3 ',
-          user.password,
-          ' 4 '
-        );
-        return setResult(1);
-      }
-    });
-  };
   return (
     <Card className="w-[407px] border-0 shadow-none ">
       <CardHeader>
-        <CardTitle className="text-2xl">Welcome back</CardTitle>
+        <CardTitle className="text-2xl">Welcome, {username}</CardTitle>
+        <CardDescription>Connect email and set a password</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -99,7 +90,7 @@ export const Login = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-bold">Email</FormLabel>
+                    <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input placeholder="Enter your email here" {...field} />
                     </FormControl>
@@ -112,7 +103,7 @@ export const Login = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-bold">Password</FormLabel>
+                    <FormLabel>Password</FormLabel>
                     <FormControl>
                       <Input
                         type="password"

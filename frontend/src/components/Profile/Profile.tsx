@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
-import { Camera } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Camera } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Form,
   FormControl,
@@ -15,22 +15,22 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useState } from "react";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { SetStateAction, useState } from 'react';
 
 const formSchema = z.object({
   username: z.string().min(2, {
-    message: "Username must be at least 2 characters.Please enter name",
+    message: 'Username must be at least 2 characters.Please enter name',
   }),
   about: z.string().min(0, {
-    message: "Please enter info about yourself",
+    message: 'Please enter info about yourself',
   }),
 
-  photo: z.string({ required_error: "Must upload image" }),
+  photo: z.string({ required_error: 'Must upload image' }),
 
   social: z.string().min(0, {
-    message: "Please enter a social link",
+    message: 'Please enter a social link',
   }),
 });
 
@@ -38,18 +38,22 @@ export function Profile() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      username: '',
     },
   });
-  const [url, setUrl] = useState(null);
-  const handlePreview = (event) => {
-    setUrl(event.target.files[0]);
+  const [url, setUrl] =
+    useState<SetStateAction<Event | null | undefined | string>>(null);
+  const handlePreview = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      setUrl(URL.createObjectURL(file));
+    }
   };
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    console.log(url, "this");
+    console.log(url, 'this');
   }
-  console.log(url, "url");
+  console.log(url, 'url');
   const imageUrl = url ? URL.createObjectURL(url as any) : null;
   return (
     <Form {...form}>
