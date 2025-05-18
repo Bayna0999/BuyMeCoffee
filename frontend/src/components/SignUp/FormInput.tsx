@@ -1,5 +1,5 @@
-import { Input } from "@/components/ui/input";
-import React, { ChangeEvent } from "react";
+import { Input } from '@/components/ui/input';
+import React, { ChangeEvent } from 'react';
 
 type FormInputProps = {
   label: string;
@@ -24,7 +24,6 @@ export const FormInput = ({
     <div>
       <p>{label}</p>
       <Input placeholder={placeholder} type={type} onChange={handleOnChange} />
-      {error && <p className="text-sm text-red-500">{error}</p>}
     </div>
   );
 };
