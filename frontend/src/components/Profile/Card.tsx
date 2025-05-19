@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -13,11 +13,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { ChangeEvent, ChangeEventHandler, useEffect, useState } from 'react';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
 
-import axios from 'axios';
+import axios from "axios";
 import {
   Select,
   SelectContent,
@@ -26,7 +26,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from '../ui/select';
+} from "../ui/select";
 
 type CountryType = {
   name: {
@@ -35,37 +35,37 @@ type CountryType = {
 };
 
 const Months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ] as const;
 
 const formSchema = z.object({
   country: z.string({
-    message: 'Select country to continue',
+    message: "Select country to continue",
   }),
   firstname: z.string().min(2, {
-    message: 'First name must match',
+    message: "First name must match",
   }),
   lastname: z.string().min(2, {
-    message: 'Last name must match',
+    message: "Last name must match",
   }),
   cardnumber: z.string().length(16, {
-    message: 'Invalid card number',
+    message: "Invalid card number",
   }),
-  expired: z.string({ message: 'Select expired month to continue' }),
-  year: z.string({ message: 'select ' }),
+  expired: z.string({ message: "Select expired month to continue" }),
+  year: z.string({ message: "select " }),
   CVC: z.string().length(3, {
-    message: 'Invalid number',
+    message: "Invalid number",
   }),
 });
 
@@ -104,18 +104,18 @@ export function Card() {
     }
     return s % 10 == 0;
   };
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const hadnleInputValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     const cardNumber = event.target.value;
     setInput(cardNumber);
 
     if (!checkLuhn(cardNumber)) {
-      form.setError('cardnumber', {
-        type: 'manual',
-        message: 'Invalid card number',
+      form.setError("cardnumber", {
+        type: "manual",
+        message: "Invalid card number",
       });
     } else {
-      form.clearErrors('cardnumber');
+      form.clearErrors("cardnumber");
     }
   };
   return (
@@ -151,7 +151,7 @@ export function Card() {
           )}
         />
         <div className="flex gap-[10px] w-[510px]">
-          {' '}
+          {" "}
           <FormField
             control={form.control}
             name="firstname"
@@ -248,12 +248,12 @@ export function Card() {
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Country</SelectLabel>
-                        <SelectItem value={'2001'}>2020</SelectItem>
-                        <SelectItem value={'2002'}>2021</SelectItem>
-                        <SelectItem value={'2003'}>2022</SelectItem>
-                        <SelectItem value={'2004'}>2023</SelectItem>
-                        <SelectItem value={'2005'}>2024</SelectItem>
-                        <SelectItem value={'2006'}>2025</SelectItem>
+                        <SelectItem value={"2001"}>2020</SelectItem>
+                        <SelectItem value={"2002"}>2021</SelectItem>
+                        <SelectItem value={"2003"}>2022</SelectItem>
+                        <SelectItem value={"2004"}>2023</SelectItem>
+                        <SelectItem value={"2005"}>2024</SelectItem>
+                        <SelectItem value={"2006"}>2025</SelectItem>
                       </SelectGroup>
                     </SelectContent>
                   </Select>
