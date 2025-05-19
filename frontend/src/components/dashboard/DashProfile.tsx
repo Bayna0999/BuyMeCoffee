@@ -62,7 +62,7 @@ export const DashProfile = () => {
   return (
     <div className="flex flex-col gap-6 w-screen py-[50px] mr-[100px]">
       <div className="flex flex-col w-full h-[300px] bg-white gap-2   border-[2px] rounded-md border-[#E4E4E7]">
-        <div className="flex justify-between w-full h-[100px] bg-white px-[24px] py-[24px]">
+        <div className="flex justify-between w-full h-[100px] bg-white px-[24px] py-[24px] rounded-md">
           <div className="flex flex-row items-center gap-2 w-[300px]">
             <Avatar className="size-[48px]">
               <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
