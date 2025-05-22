@@ -16,6 +16,9 @@ model User {
   name  String
   password String
   Profile Profile?
+  BankCard BankCard?
+  receivedDonations Donations[]
+  donation Donation[]
 }
 
 model Profile {
@@ -27,11 +30,24 @@ model Profile {
   phoneNumber String
   address String
 }
-// model BankCard {
-//   id    Int     @id @default(autoincrement())
-//   userId Int     @unique
-//   user  User    @relation(fields: [userId], references: [id])
-//   cardNumber String
-//   expirationDate DateTime
-//   cvv String
-// }
+model BankCard {
+  id    Int     @id @default(autoincrement())
+  country String
+  firstName String
+  lastName String
+  cardNumber String
+  expiryDate DateTime
+  userId Int @unique
+  user   User    @relation(fields: [userId], references: [id],onDelete: Cascade)
+}
+model Donation {
+id	Int 
+amount	Int
+specialMessage	String
+socialURLOrBuyMeACoffee	String
+donorId	Int
+recipientId	Int
+createdAt	DateTime
+updatedAt	DateTime
+donor	User	@relation( fields: [donorId], references: [id], onDelete: Cascade)
+}
