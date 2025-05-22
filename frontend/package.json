@@ -23,6 +23,8 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "command": "^1.1.1",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
     "lucide-react": "^0.507.0",
     "mineflayer-autoclicker": "^1.2.0",
     "next": "15.3.1",

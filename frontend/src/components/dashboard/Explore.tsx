@@ -1,7 +1,7 @@
-import React from 'react';
-import { Input } from '../ui/input';
-import { Search } from 'lucide-react';
-import { Creaters } from './Creaters';
+import React from "react";
+import { Input } from "../ui/input";
+import { Search } from "lucide-react";
+import { Creaters } from "./Creaters";
 
 export const Explore = () => {
   return (
@@ -12,7 +12,6 @@ export const Explore = () => {
           <Search className="size-4" />
           <input type="text" placeholder="Search name" />
         </div>
-
         <Creaters />
       </div>
     </div>
